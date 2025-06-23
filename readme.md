@@ -14,8 +14,8 @@ All services are containerized, health-checked, and accessible via a single port
 ### 2. Clone and Run
 
 ```bash
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
+https://github.com/i0am0arunava/Go-And-Py-server-Reverse_Proxy.git
+cd Go-And-Py-server-Reverse_Proxy
 docker-compose up --build
 ```
 
