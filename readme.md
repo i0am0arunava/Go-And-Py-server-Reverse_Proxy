@@ -1,101 +1,85 @@
-### 🧪 **DevOps Intern Assignment: Nginx Reverse Proxy + Docker**
+# 🚀 Multi-Service Reverse Proxy with Docker Compose
 
-You are expected to set up a simple system where:
-
-1. **Two Dockerized backend services** (can be dummy services) run on different ports.
-2. An **Nginx reverse proxy** (also in a Docker container) routes:
-
-   * `/service1` requests to backend service 1
-   * `/service2` requests to backend service 2
-3. All services must be accessible via a single port (e.g., `localhost:8080`).
+This project runs two backend services (Go and Python) behind an NGINX reverse proxy using Docker Compose.  
+All services are containerized, health-checked, and accessible via a single port.
 
 ---
 
-### ✅ **Requirements**
+## 🛠 Setup Instructions
 
-1. Use Docker Compose to bring up the entire system.
-2. Each backend service should respond with a JSON payload like:
+### 1. Prerequisites
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
 
-   ```json
-   {"service": "service1"}
-   ```
-3. The Nginx config should support:
+### 2. Clone and Run
 
-   * Routing based on URL path prefix (`/service1`, `/service2`)
-   * Logging incoming requests with timestamp and path
-4. The system should work with a single command:
-
-   ```bash
-   docker-compose up --build
-   ```
-5. Bonus: Add a health check for both services and show logs of successful routing.
+```bash
+git clone https://github.com/your-username/your-repo.git
+cd your-repo
+docker-compose up --build
+```
 
 ---
 
-### 📁 Suggested Project Structure
+## 🔁 How Routing Works
+
+The NGINX container listens on `http://localhost:8080` and routes:
+
+| URL                            | Target Service         | Description             |
+|--------------------------------|------------------------|-------------------------|
+| `/service1/`                   | Go Service (port 8001) | Root and APIs           |
+| `/service2/`                   | Python Service (8002)  | Root and APIs           |
+
+Examples:
+- `http://localhost:8080/service1/ping`
+- `http://localhost:8080/service2/hello`
+
+Routing is handled via **path prefixes** in the NGINX config.
+
+---
+
+## 🏆 Bonus Features Implemented
+
+✅ **Health Checks**  
+Each service is monitored using Docker healthchecks via `/health` endpoints.
+
+✅ **Modular Docker Setup**  
+Separate `Dockerfile` and config for each service, using a shared `bridge` network.
+
+✅ **Logging**  
+NGINX logs every incoming request with timestamp and path.
+
+✅ **Automated Test Script**
+
+Run to verify all endpoints work:
+
+```bash
+chmod +x test.sh
+./test.sh
+```
+
+---
+
+## 📁 Folder Structure
 
 ```
 .
 ├── docker-compose.yml
-├── nginx
-│   ├── default.conf
-│   └── Dockerfile
-├── service_1
-│   ├── app.py
-│   └── Dockerfile
-├── service_2
-│   ├── app.py
-│   └── Dockerfile
+├── nginx/
+│   ├── Dockerfile
+│   └── nginx.conf
+├── service_1/
+│   ├── Dockerfile
+│   └── main.go
+├── service_2/
+│   ├── Dockerfile
+│   └── app.py
+├── test.sh
 └── README.md
 ```
 
 ---
 
-### 📦 Tech Constraints
+## 👨‍💻 Author
 
-* Nginx must run in a Docker container, not on host
-* Use bridge networking (no host networking)
-
----
-
-### 📝 Submission Instructions
-
-1. Upload your project to GitHub or GitLab.
-2. Include a short `README.md` with:
-
-   * Setup instructions
-   * How routing works
-   * Any bonus you implemented
-3. Deadline: **1 week**
-4. Bonus points for:
-
-   * Logging clarity
-   * Clean and modular Docker setup
-   * Healthcheck or automated test script
-
----
-
-### ❓FAQs
-
-**Q: Is this a full-time role?**
-Yes. You would need to be in office in Bangalore.
-
-**Q: Is there a stipend?**
-Yes. 20k INR per month
-
-**Q: How many positions are open?**
-Two positions are open.
-
-**Q: I am still in college. Can I apply?**
-Unfortunately, we are looking for post-college candidates.
-
-**Q: Can I reach out for doubts?**
-No — due to the volume of submissions. Please use your creativity and assumptions where needed.
-
-**Q: Can I use ChatGPT or Copilot?**
-Yes, feel free to use AI tools — we care about your implementation and understanding.
-
-**Q: This feels like a lot for an intern assignment.**
-We agree it’s non-trivial — we’ve received many applications, so this helps us filter based on quality.
-
-
+Built with ❤️ by [Your Name](https://github.com/your-username)
